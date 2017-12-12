@@ -28,32 +28,35 @@
     </div>
 <script>
     let userInput;
-
+    let count = 0;
     //main functionality: adding books
     document.getElementsByClassName("add-item__button")[0].onclick = () => {
 
         userInput = document.getElementsByClassName("add-item__input")[0].value;
 
-        document.getElementsByClassName("item-list")[0].innerHTML += 
 
-            `<div class="list-items">     
-                <div class="item_read">
-                    <div class="item__title"><h2>${userInput}</h2></div>
-                    <div class="item__buttons">
-                        <button onclick="showEditMode(event)" class="item__edit-item">edit</button>
-                        <button onclick="deleteItem(event)" class="item__delete-item">del</button>
-                    </div>        
-                </div>
-                
-                <div class="item_edit" style="display:none">
-                    <input class="item__input" placeholder=${userInput} />
-                    <div class="item__buttons">
-                        <button onclick="save(event)" class="item__save-item">save</button>
-                        <button onclick="showReadMode(event)" class="item__-item">cancel</button>
-                    </div>    
-                </div>
-            </div>`
-            
+        if (userInput) {
+            document.getElementsByClassName("item-list")[0].innerHTML += 
+
+                `<div class="list-items">     
+                    <div class="item_read">
+                        <div class="item__title"><h2>${userInput}</h2></div>
+                        <div class="item__buttons">
+                            <button onclick="showEditMode(event)" class="item__edit-item">edit</button>
+                            <button onclick="deleteItem(event)" class="item__delete-item">del</button>
+                        </div>        
+                    </div>
+                    
+                    <div class="item_edit" style="display:none">
+                        <input class="item__input" placeholder=${userInput} />
+                        <div class="item__buttons">
+                            <button onclick="save(event)" class="item__save-item">save</button>
+                            <button onclick="showReadMode(event)" class="item__-item">cancel</button>
+                        </div>    
+                    </div>
+                </div>`
+        }
+        count++;
     }
 
     //node traversals
@@ -71,8 +74,12 @@
     }
     function save(e) {
         userEdit = getEditNode(e).childNodes[1].value; //grabs the value of the user input
-        getReadNode(e).childNodes[1].childNodes[0].innerHTML = userEdit; //to change the value of the read node
-        showReadMode(e);
+
+        console.log(userEdit);
+        if (userEdit) {
+            getReadNode(e).childNodes[1].childNodes[0].innerHTML = userEdit; //to change the value of the read node
+            showReadMode(e);
+        }
     }
 
     function deleteItem(e) {
