@@ -25,40 +25,76 @@
             <button class="add-item__button">+</button>
         </div>
 
-        <div class="item_read">
-            <div class="item__title"><h2>Oliver Twist</h2></div>
-            <div class="item__buttons">
-                <button class="item__edit-item">edit</button>
-                <button class="item__delete-item">del</button>
-            </div>        
-        </div>
-
-        <div class="item_read">
-            <div class="item__title"><h2>Jane Austen</h2></div>
-            <div class="item__buttons">
-                <button class="item__edit-item">edit</button>
-                <button class="item__delete-item">del</button>
-            </div>        
-        </div>
-
-        <div class="item_read">
-            <div class="item__title"><h2>1984</h2></div>
-            <div class="item__buttons">
-                <button class="item__edit-item">edit</button>
-                <button class="item__delete-item">del</button>
-            </div>        
-        </div>
-        
-        <div class="item_edit">
-            <input class="item__input" placeholder="1984" />
-            <div class="item__buttons">
-                <button class="item__save-item">save</button>
-                <button class="item__-item">cancel</button>
-            </div>        
-        </div>
-     
-
+        <div class="item-list"></div>
     </div>
+<script>
+    let userInput;
+
+    //main functionality: adding books
+    document.getElementsByClassName("add-item__button")[0].onclick = () => {
+
+        userInput = document.getElementsByClassName("add-item__input")[0].value;
+
+        document.getElementsByClassName("item-list")[0].innerHTML += 
+
+            `<div class="list-items">     
+                <div class="item_read">
+                    <div class="item__title"><h2>${userInput}</h2></div>
+                    <div class="item__buttons">
+                        <button onclick="showEditMode(event)" class="item__edit-item">edit</button>
+                        <button onclick="deleteItem(event)" class="item__delete-item">del</button>
+                    </div>        
+                </div>
+                
+                <div class="item_edit" style="display:none">
+                    <input class="item__input" placeholder=${userInput} />
+                    <div class="item__buttons">
+                        <button onclick="save(event)" class="item__save-item">save</button>
+                        <button onclick="showReadMode(event)" class="item__-item">cancel</button>
+                    </div>    
+                </div>
+            </div>`
+            
+    }
+    var listNode;
+    //helper functions:
+    function showEditMode(e) {
+        //children = e.target.parentNode.parentNode.parentNode.childNodes;
+        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
+        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
+
+        readNode.style.display = "none";
+        editNode.style.display = "inline";
+    }
+    function showReadMode(e) {
+        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
+        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
+        
+        readNode.style.display = "inline";
+        editNode.style.display = "none";
+    }
+    function save(e) {
+        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
+        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
+
+        userEdit = editNode.childNodes[1].value;
+
+        readNode.childNodes[1].childNodes[0].innerHTML = userEdit;
+
+        showReadMode(e);
+
+        console.log(readNode.childNodes[1].childNodes[0].innerHTML)
+    }
+
+    function deleteItem(e) {
+        parent = e.target.parentNode.parentNode.parentNode
+        deleteItems = e.target.parentNode.parentNode.parentNode.childNodes;
+        
+        parent.removeChild(deleteItems[1])
+        parent.removeChild(deleteItems[3])
+    }
+
+</script>
 
 </body>
 </html>
