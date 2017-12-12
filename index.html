@@ -13,7 +13,6 @@
 </head>
 <body>
 
-  
         <div class="header">
             <div class="header__text"><h1>Reading List</h1></div>    
         </div>
@@ -56,40 +55,30 @@
             </div>`
             
     }
-    var listNode;
+
+    //node traversals
+    const getReadNode = (e) => e.target.parentNode.parentNode.parentNode.childNodes[1];
+    const getEditNode = (e) => e.target.parentNode.parentNode.parentNode.childNodes[3];
+
     //helper functions:
     function showEditMode(e) {
-        //children = e.target.parentNode.parentNode.parentNode.childNodes;
-        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
-        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
-
-        readNode.style.display = "none";
-        editNode.style.display = "inline";
+        getReadNode(e).style.display = "none";
+        getEditNode(e).style.display = "block";
     }
     function showReadMode(e) {
-        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
-        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
-        
-        readNode.style.display = "inline";
-        editNode.style.display = "none";
+        getReadNode(e).style.display = "block";
+        getEditNode(e).style.display = "none";
     }
     function save(e) {
-        readNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
-        editNode = e.target.parentNode.parentNode.parentNode.childNodes[3];
-
-        userEdit = editNode.childNodes[1].value;
-
-        readNode.childNodes[1].childNodes[0].innerHTML = userEdit;
-
+        userEdit = getEditNode(e).childNodes[1].value; //grabs the value of the user input
+        getReadNode(e).childNodes[1].childNodes[0].innerHTML = userEdit; //to change the value of the read node
         showReadMode(e);
-
-        console.log(readNode.childNodes[1].childNodes[0].innerHTML)
     }
 
     function deleteItem(e) {
-        parent = e.target.parentNode.parentNode.parentNode
-        deleteItems = e.target.parentNode.parentNode.parentNode.childNodes;
-        
+        parent = e.target.parentNode.parentNode.parentNode; 
+        deleteItems = e.target.parentNode.parentNode.parentNode.childNodes; 
+
         parent.removeChild(deleteItems[1])
         parent.removeChild(deleteItems[3])
     }
