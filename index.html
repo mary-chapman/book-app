@@ -12,7 +12,6 @@
     <title>BOOK APP</title>
 </head>
 <body>
-
         <div class="header">
             <div class="header__text"><h1>Reading List</h1></div>    
         </div>
@@ -24,19 +23,21 @@
             <button class="add-item__button">+</button>
         </div>
 
-        <div class="item-list"></div>
+        <div class="item-list-container"></div>
     </div>
+
 <script>
     let userInput;
-    let count = 0;
+
     //main functionality: adding books
     document.getElementsByClassName("add-item__button")[0].onclick = () => {
 
         userInput = document.getElementsByClassName("add-item__input")[0].value;
-
+        //console.log(userInput);
+        //console.log(document.getElementsByClassName("item__title")[0])
 
         if (userInput) {
-            document.getElementsByClassName("item-list")[0].innerHTML += 
+            document.getElementsByClassName("item-list-container")[0].innerHTML += 
 
                 `<div class="list-items">     
                     <div class="item_read">
@@ -56,28 +57,24 @@
                     </div>
                 </div>`
         }
-        count++;
+        document.getElementsByClassName("add-item__input")[0].value = "";
     }
-
-    //node traversals
-    const getReadNode = (e) => e.target.parentNode.parentNode.parentNode.childNodes[1];
-    const getEditNode = (e) => e.target.parentNode.parentNode.parentNode.childNodes[3];
 
     //helper functions:
     function showEditMode(e) {
-        getReadNode(e).style.display = "none";
-        getEditNode(e).style.display = "block";
+        e.target.parentNode.parentNode.style.display = "none";
+        e.target.parentNode.parentNode.parentNode.childNodes[3].style.display = "block";
     }
     function showReadMode(e) {
-        getReadNode(e).style.display = "block";
-        getEditNode(e).style.display = "none";
+        e.target.parentNode.parentNode.parentNode.childNodes[1].style.display = "block";
+        e.target.parentNode.parentNode.style.display = "none";
     }
     function save(e) {
-        userEdit = getEditNode(e).childNodes[1].value; //grabs the value of the user input
+        title = e.target.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].childNodes[0];
+        userEdit = e.target.parentNode.parentNode.childNodes[1].value; //grabs the value of the user input
 
-        console.log(userEdit);
         if (userEdit) {
-            getReadNode(e).childNodes[1].childNodes[0].innerHTML = userEdit; //to change the value of the read node
+            title.innerHTML = userEdit; //to change the value of the read node
             showReadMode(e);
         }
     }
