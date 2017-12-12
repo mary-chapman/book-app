@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 
 class AddForm extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         return (
-            <form>
-                <div className="add-item" >
-                    <input name="title" className="add-item__input" />
-                    <button onClick={(e) => {
-                            e.preventDefault();
-                            this.props.handleAddItem(this.form) 
-                        }
-                    }
-                    type="submit" className="add-item__button">+</button>
-                </div>
-            </form>
+            <div className="add-item" >
+                <input ref={(input) => this.userInput = input} name="title" className="add-item__input" />
+                <button onClick={() => this.props.handleAddItem(this.userInput)} className="add-item__button">+</button>
+            </div>
         )
 
     }

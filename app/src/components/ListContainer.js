@@ -13,39 +13,44 @@ class ListContainer extends Component {
         }
         this.deleteItem = this.deleteItem.bind(this);
         this.saveItem = this.saveItem.bind(this);
-        this.addItem = this.addItem.bind(this);
-        
+        this.addItem = this.addItem.bind(this);   
     }
-    addItem(event) {
-        console.log("TEST")
-        console.log(event.title.value)
+    addItem(input) {
+        if (input.value) {
+            var copy = this.state.books.slice(); //create a copy of the array
+            copy.push({title: input.value}); //adds the new object to the array
+            this.setState({books: copy}); //sets the new state as the updated copy
+            input.value = "";
+        }
     }
     deleteItem(index) {
         this.setState({ books: this.state.books.filter((x,i) => i != index) })
     }
     saveItem(input, index) {
-        var copy = this.state.books.slice(); //create a copy of the array
-        copy[index] = {title: input} //update the array
-        this.setState({books: copy}) //update the state with the new object
+        if (input) {
+            var copy = this.state.books.slice(); //create a copy of the array
+            copy[index] = {title: input} //update the array
+            this.setState({books: copy}) //update the state with the new object
+        }
     }
 
     render() {
         return (
             <div>
+                <AddForm handleAddItem = {this.addItem} />
+
                 { this.state.books.map((item, index) => {
                     return (
                         <div>
-                            <AddForm 
-                                handleAddItem = {this.addItem}
-                            />
-                            <ListItem title={item.title} 
-                                    index={index}
-                                    handleDelete={this.deleteItem}
-                                    handleSave={this.saveItem}
-                            />
+                            <ListItem key = {index}
+                                      title={item.title} 
+                                      index={index}
+                                      handleDelete={this.deleteItem}
+                                      handleSave={this.saveItem} />
                         </div>
                     )
                 })}
+
             </div>
         )
 
