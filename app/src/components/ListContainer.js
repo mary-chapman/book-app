@@ -9,7 +9,7 @@ class ListContainer extends Component {
         super(props);
 
        this.state = {
-           books: [{title: "book1"}, {title: "book2"}]
+           books: [{title: "The Great Gatsby"}, {title: "Oliver Twist"}]
         }
         this.deleteItem = this.deleteItem.bind(this);
         this.saveItem = this.saveItem.bind(this);
@@ -24,7 +24,7 @@ class ListContainer extends Component {
         }
     }
     deleteItem(index) {
-        this.setState({ books: this.state.books.filter((x,i) => i != index) })
+        this.setState({ books: this.state.books.filter((x,i) => i !== index) })
     }
     saveItem(input, index) {
         if (input) {
@@ -41,13 +41,11 @@ class ListContainer extends Component {
 
                 { this.state.books.map((item, index) => {
                     return (
-                        <div>
-                            <ListItem key = {index}
+                            <ListItem key={index}
                                       title={item.title} 
                                       index={index}
                                       handleDelete={this.deleteItem}
                                       handleSave={this.saveItem} />
-                        </div>
                     )
                 })}
 
