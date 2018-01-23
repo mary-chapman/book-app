@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import EditItem from './EditItem';
+
 class ListItem extends Component {
     constructor(props) {
         super(props);
@@ -14,27 +16,36 @@ class ListItem extends Component {
                 <div className="item__buttons">
                     <button onClick={() => this.setState({isEditMode: true})} className="item__edit-item">edit</button>
                     <button onClick={() => this.props.handleDelete(this.props.index)} className="item__delete-item">del</button>
-                </div>        
+                </div>
             </div>
         )
     }
+    // editMode() {
+    //     return (
+    //         <div className="item_edit">
+    //             <input ref={(input) => this.userInput = input} className="item__input" placeholder={this.props.title} />
+    //             <div className="item__buttons">
+    //                 <button
+    //                     onClick={() => {
+    //                         this.props.handleSave(this.userInput.value, this.props.index)
+    //                         this.setState({isEditMode: false})
+    //                     }}
+    //                     className="item__save-item">
+    //                     save
+    //                 </button>
+    //                 <button onClick={() => this.setState({isEditMode: false})} className="item__-item">cancel</button>
+    //             </div>
+    //         </div>
+    //     )
+    // }
+    changeMode() {
+      this.setState({isEditMode: !this.state.isEditMode})
+    }
     editMode() {
-        return (
-            <div className="item_edit">
-                <input ref={(input) => this.userInput = input} className="item__input" placeholder={this.props.title} />
-                <div className="item__buttons">
-                    <button 
-                        onClick={() => {
-                            this.props.handleSave(this.userInput.value, this.props.index)
-                            this.setState({isEditMode: false})
-                        }}
-                        className="item__save-item">
-                        save
-                    </button>
-                    <button onClick={() => this.setState({isEditMode: false})} className="item__-item">cancel</button>
-                </div>    
-            </div>
-        )
+      console.log("EDITEDDD!!!")
+      return (
+        <EditItem handleEditMode={() => this.setState({isEditMode: !this.state.isEditMode})} />
+      )
     }
     render() {
         return (this.state.isEditMode) ? this.editMode() : this.regMode()
