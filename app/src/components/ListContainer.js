@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ListItem from './ListItem'
+import ListItem from './ListItem';
 import AddForm from './AddForm';
 
 
@@ -11,9 +11,10 @@ class ListContainer extends Component {
        this.state = {
            books: [{title: "The Great Gatsby"}, {title: "Oliver Twist"}]
         }
+
         this.deleteItem = this.deleteItem.bind(this);
         this.saveItem = this.saveItem.bind(this);
-        this.addItem = this.addItem.bind(this);   
+        this.addItem = this.addItem.bind(this);
     }
     addItem(input) {
         if (input.value) {
@@ -42,7 +43,7 @@ class ListContainer extends Component {
                 { this.state.books.map((item, index) => {
                     return (
                             <ListItem key={index}
-                                      title={item.title} 
+                                      title={item.title}
                                       index={index}
                                       handleDelete={this.deleteItem}
                                       handleSave={this.saveItem} />
