@@ -6,21 +6,15 @@ import AddForm from './AddForm';
 
 class ListContainer extends Component {
     constructor(props) {
-        super(props);
-
-       this.state = {
-           books: [{title: "The Great Gatsby"}, {title: "Oliver Twist"}]
-        }
-
-        this.deleteItem = this.deleteItem.bind(this);
-        this.saveItem = this.saveItem.bind(this);
-        this.addItem = this.addItem.bind(this);
+      super(props);
+      this.state = { books: [{title: "The Great Gatsby"}, {title: "Oliver Twist"}] }
     }
     addItem(input) {
         if (input.value) {
             var copy = this.state.books.slice(); //create a copy of the array
             copy.push({title: input.value}); //adds the new object to the array
             this.setState({books: copy}); //sets the new state as the updated copy
+
             input.value = "";
         }
     }
@@ -34,19 +28,18 @@ class ListContainer extends Component {
             this.setState({books: copy}) //update the state with the new object
         }
     }
-
     render() {
         return (
             <div>
-                <AddForm handleAddItem = {this.addItem} />
+                <AddForm handleAddItem = {this.addItem.bind(this)} />
 
                 { this.state.books.map((item, index) => {
                     return (
                             <ListItem key={index}
                                       title={item.title}
                                       index={index}
-                                      handleDelete={this.deleteItem}
-                                      handleSave={this.saveItem} />
+                                      handleDelete={this.deleteItem.bind(this)}
+                                      handleSave={this.saveItem.bind(this)} />
                     )
                 })}
 
